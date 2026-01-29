@@ -34,9 +34,17 @@
                 const taskItem = document.createElement("li");
                 taskItem.innerHTML = `
                 <span>${text}</span>
+                <button class="delete">Delete</button>
                 `;
                 taskList.appendChild(taskItem);
+
+                // Delete the task
+                const deleteButton = taskItem.querySelector(".delete");
+                deleteButton.addEventListener("click", () => {
+                    taskItem.remove();
+                });
             }
+
         </script>
     </body>
 </html>
