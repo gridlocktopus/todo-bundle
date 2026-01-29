@@ -1,0 +1,16 @@
+.container{
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+h1{
+    text-align: center;
+}
+
+.input-container{
+    display: flex;
+}
+
+input[type="text"]{
+    flex: 1;
+}

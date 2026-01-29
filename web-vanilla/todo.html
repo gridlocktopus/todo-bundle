@@ -5,46 +5,18 @@
         <meta charset="UTF-8">
         <meta name="author" content="gridlocktopus">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <div class="container" style="max-width: 400px; margin: 0 auto;">
-            <h1 style="text-align: center;">To Do List</h1>
-            <div class="input-container" style="display: flex;">
-                <input type="text" id="task" placeholder="Add your task here..." style="flex: 1;">
+        <div class="container">
+            <h1>To Do List</h1>
+            <div class="input-container">
+                <input type="text" id="task" placeholder="Add your task here...">
                 <button id="add">Add</button>
             </div>
             <ul id="tasklist"></ul>
         </div>
-        <script>
-            const taskInput = document.getElementById("task");
-            const addButton = document.getElementById("add");
-            const taskList = document.getElementById("tasklist");
-
-            // Add task
-            addButton.addEventListener("click", () => {
-                const taskText = taskInput.value.trim();
-                if (taskText != "") {
-                    createTask(taskText);
-                    taskInput.value = "";
-                }
-            });
-
-            // Create a new task
-            function createTask(text) {
-                const taskItem = document.createElement("li");
-                taskItem.innerHTML = `
-                <span>${text}</span>
-                <button class="delete">Delete</button>
-                `;
-                taskList.appendChild(taskItem);
-
-                // Delete the task
-                const deleteButton = taskItem.querySelector(".delete");
-                deleteButton.addEventListener("click", () => {
-                    taskItem.remove();
-                });
-            }
-
-        </script>
+        
+        <script src="app.js"></script>
     </body>
 </html>
