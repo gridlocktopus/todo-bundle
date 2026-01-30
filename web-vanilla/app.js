@@ -32,8 +32,8 @@ addTask.addEventListener("click", () => {
         todos = addTodo(todos, createTodo(todoText));
         saveTodos(todos);
         taskInput.value = "";
+        renderTodos(todos);
     }
-    renderTodos(todos);
 })
 
 // Retrieve todo items from localstorage
@@ -66,9 +66,10 @@ function renderTodos(todoArray){
     for (let i = 0; i < todoArray.length; i++) {
         const taskItem = document.createElement("li");
         taskItem.innerHTML = `
-        <span>${todoArray[i].text}</span>
+        <span></span>
         <button class="delete" data-id="${todoArray[i].id}">Delete</button>
         `;
+        taskItem.querySelector("span").textContent = todoArray[i].text;
         taskList.appendChild(taskItem);
     }
 }
