@@ -66,6 +66,7 @@ function renderTodos(todoArray){
     for (let i = 0; i < todoArray.length; i++) {
         const taskItem = document.createElement("li");
         taskItem.innerHTML = `
+        <input type="checkbox">
         <span></span>
         <button class="delete" data-id="${todoArray[i].id}">Delete</button>
         `;
@@ -86,77 +87,5 @@ taskList.addEventListener("click", (event) => {
 })
 
 
-
-// localStorage.clear();
-
-
-
-// const taskInput = document.getElementById("task");
-// const addButton = document.getElementById("add");
-// const taskList = document.getElementById("tasklist");
-
-// let todos = getTodos();
-
-// // Retrieve and print stored tasks
-// if (todos.length) {
-//     for (i in todos) {
-//         const taskItem = document.createElement("li");
-//         taskItem.innerHTML = `
-//         <span>${todos[i]}</span>
-//         <button class="delete">Delete</button>
-//         `;
-//         taskList.appendChild(taskItem);
-//     }
-// }
-
-
-// // Add task
-// addButton.addEventListener("click", () => {
-//     const taskText = taskInput.value.trim();
-//     if (taskText != "") {
-//         createTask(taskText);
-//         taskInput.value = "";
-//     }
-// });
-
-// // Create a new task
-// function createTask(text) {
-//     todos.push(text);
-//     saveTodos(todos);
-//     const taskItem = document.createElement("li");
-//     taskItem.innerHTML = `
-//     <span>${text}</span>
-//     <button class="delete">Delete</button>
-//     `;
-//     taskList.appendChild(taskItem);
-
-//     // Delete the task
-//     const deleteButton = taskItem.querySelector(".delete");
-//     deleteButton.addEventListener("click", () => {
-//         todos.pop(taskItem);
-//         deleteTodos(todos);
-//         taskItem.remove();
-//     });
-  
-    
-// }
-
-// function saveTodos(todosArray) {
-//     const todosJson = JSON.stringify(todosArray);
-//     localStorage.setItem('todos', todosJson);
-// }
-
-// function deleteTodos(todosArray) {
-//     const todosJson = JSON.stringify(todosArray);
-//     localStorage.removeItem('todos', todosJson);
-// }
-
-// function getTodos() {
-//     // localStorage.clear();
-//     const todosJson = localStorage.getItem("todos");
-//     if (todosJson) {
-//         return JSON.parse(todosJson);
-//     } else {
-//         return [];
-//     }
-// }
+//**  KILLSWITCH **//
+//  localStorage.clear();

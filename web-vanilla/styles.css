@@ -1,16 +1,71 @@
+body{
+    font-family: "Inter", sans-serif;
+}
+
 .container{
     max-width: 400px;
     margin: 0 auto;
 }
 
 h1{
+    font-size: 64px;
+    font-weight: 800;
     text-align: center;
 }
 
 .input-container{
     display: flex;
+    margin-bottom: 50px;
 }
 
-input[type="text"]{
+input[type="text"] {
     flex: 1;
+    padding: 15px;
+    font-size: 17px;
+    color: black;
+    border-top-left-radius: .5em;
+    border-bottom-left-radius: .5em;
+    margin-right: -10px;
 }
+
+button#add {
+    border: none;
+    background-color: #1363DF;
+    text-decoration: none;
+    padding: 15px;
+    padding-bottom: 17px;
+    font-size: 17px;
+    color: #fff;
+    border-top-right-radius: .5em;
+    border-bottom-right-radius: .5em;
+    cursor: pointer;
+}
+
+button.delete{
+    border: none;
+    background-color: #1363DF;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 14px;
+    color: #fff;
+    border-radius: .5em;
+    cursor: pointer;
+}
+
+li{
+    padding: 15px;
+    /* margin-bottom: 15px; */
+    list-style: none;
+    /* text-align: center; */
+    font-size: 17px;
+    border-bottom: solid 1.5px;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
