@@ -65,6 +65,7 @@ function renderTodos(todoArray){
     taskList.replaceChildren();
     for (let i = 0; i < todoArray.length; i++) {
         const taskItem = document.createElement("li");
+        taskItem.classList.add("card");
         taskItem.innerHTML = `
         <input type="checkbox">
         <span></span>
