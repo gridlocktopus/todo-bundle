@@ -90,3 +90,10 @@ input[type="checkbox"] {
     height: 20px;
     vertical-align: middle;
 }
+
+li.completed > span{
+    text-decoration: line-through;
+    color: gray;
+}
+
+

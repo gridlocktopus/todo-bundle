@@ -62,15 +62,19 @@ function saveTodos(todosArray) {
 // Render the list
 function renderTodos(todoArray){
     taskList.replaceChildren();
-    for (let i = 0; i < todoArray.length; i++) {
+    for (const todo of todoArray) {
         const taskItem = document.createElement("li");
         taskItem.classList.add("card", "taskItem");
-        taskItem.dataset.id = todoArray[i].id;
+        taskItem.dataset.id = todo.id;
         taskItem.innerHTML = `
         <input type="checkbox">
         <span></span>
         `;
-        taskItem.querySelector("span").textContent = todoArray[i].text;
+        taskItem.querySelector("span").textContent = todo.text;
+        if (todo.status === STATUS.COMPLETED){
+            taskItem.classList.add("completed");
+            taskItem.querySelector('input[type="checkbox"]').checked = true;
+        }
         taskList.appendChild(taskItem);
     }
 }
@@ -88,8 +92,10 @@ function renderTodos(todoArray){
 
 // Complete a todo item
 taskList.addEventListener("click", (event) => {
+    const taskItem = event.target.closest(".taskItem");
+    if (!taskItem) return;
     const newTodos = todos.map(todo => {
-        if (todo.id === event.target.dataset.id) {
+        if (todo.id === taskItem.dataset.id) {
             return {
                 ...todo,
                 status: todo.status === STATUS.PENDING ? STATUS.COMPLETED : STATUS.PENDING
