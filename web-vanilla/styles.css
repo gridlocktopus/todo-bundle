@@ -41,7 +41,8 @@ button#add {
     cursor: pointer;
 }
 
-button.delete{
+/* REMOVE */
+/* button.delete{
     border: none;
     background-color: #1363DF;
     text-decoration: none;
@@ -51,7 +52,7 @@ button.delete{
     border-radius: .5em;
     cursor: pointer;
     display: none;
-}
+} */
 
 ul{
     padding-inline-start: 0px;
@@ -83,15 +84,9 @@ span{
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-/* Add some padding inside the card container */
-.container {
-  padding: 2px 16px;
-}
-
 input[type="checkbox"] {
     cursor: pointer;
     width: 20px;
     height: 20px;
     vertical-align: middle;
 }
-

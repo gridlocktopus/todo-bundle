@@ -1,8 +1,7 @@
 // Define allowed statuses for a todo item
 const STATUS = Object.freeze({
-    ON_SCHEDULE: "onSchedule",
+    PENDING: "pending",
     COMPLETED: "completed",
-    LATE: "late"
 });
 
 // Define UI constants
@@ -15,30 +14,30 @@ let todos = getTodos();
 renderTodos(todos);
 
 // Initialize a new todo item
-function createTodo(text, dueAt = null) {
+function createTodo(text) {
+    const timestamp = Date.now();
     return{
         id: crypto.randomUUID(),
         text: text,
-        status: STATUS.ON_SCHEDULE,       //Default
-        createdAt: Date.now(),
-        dueAt
+        status: STATUS.PENDING,       //Default
+        createdAt: timestamp,
+        dueAt: timestamp + 86400000
     }
 }
 
 // Create todo item from user input and add it to array of todos
-addTask.addEventListener("click", () => {
-    const todoText = taskInput.value.trim();
-    if (todoText !== "") {
-        todos = addTodo(todos, createTodo(todoText));
-        saveTodos(todos);
-        taskInput.value = "";
-        renderTodos(todos);
-    }
-})
+    addTask.addEventListener("click", () => {
+        const todoText = taskInput.value.trim();
+        if (todoText !== "") {
+            todos = addTodo(todos, createTodo(todoText));
+            saveTodos(todos);
+            taskInput.value = "";
+            renderTodos(todos);
+        }
+    })
 
 // Retrieve todo items from localstorage
 function getTodos() {
-    // localStorage.clear();
     const todosJson = localStorage.getItem("todos");
     if (todosJson) {
         return JSON.parse(todosJson);
@@ -65,27 +64,46 @@ function renderTodos(todoArray){
     taskList.replaceChildren();
     for (let i = 0; i < todoArray.length; i++) {
         const taskItem = document.createElement("li");
-        taskItem.classList.add("card");
+        taskItem.classList.add("card", "taskItem");
+        taskItem.dataset.id = todoArray[i].id;
         taskItem.innerHTML = `
         <input type="checkbox">
         <span></span>
-        <button class="delete" data-id="${todoArray[i].id}">Delete</button>
         `;
         taskItem.querySelector("span").textContent = todoArray[i].text;
         taskList.appendChild(taskItem);
     }
 }
 
-// Delete an item from the list
+// // Delete an item from the list
+// taskList.addEventListener("click", (event) => {
+//     if (event.target.classList.contains("delete")){
+//         const taskId = event.target.dataset.id;
+//         const newTodos = todos.filter(todo => todo.id !== taskId);
+//         todos = newTodos;
+//         saveTodos(todos);
+//         renderTodos(todos);
+//     }
+// })
+
+// Complete a todo item
 taskList.addEventListener("click", (event) => {
-    if (event.target.classList.contains("delete")){
-        const taskId = event.target.dataset.id;
-        const newTodos = todos.filter(todo => todo.id !== taskId);
-        todos = newTodos;
-        saveTodos(todos);
-        renderTodos(todos);
-    }
-})
+    const newTodos = todos.map(todo => {
+        if (todo.id === event.target.dataset.id) {
+            return {
+                ...todo,
+                status: todo.status === STATUS.PENDING ? STATUS.COMPLETED : STATUS.PENDING
+            };
+        } else {
+            return todo;
+        }
+    });
+    todos = newTodos;
+    saveTodos(todos);
+    renderTodos(todos);
+});
+
+
 
 
 //**  KILLSWITCH **//
