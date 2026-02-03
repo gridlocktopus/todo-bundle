@@ -8,6 +8,7 @@ const STATUS = Object.freeze({
 const taskInput = document.getElementById("task");
 const addTask = document.getElementById("add");
 const taskList = document.getElementById("tasklist");
+const clearTasks = document.getElementById("clear");
 
 // Initialize array of todo items
 let todos = getTodos();
@@ -15,54 +16,78 @@ renderTodos(todos);
 
 // Initialize a new todo item
 function createTodo(text) {
-    const timestamp = Date.now();
     return{
         id: crypto.randomUUID(),
         text: text,
         status: STATUS.PENDING,       //Default
-        createdAt: timestamp,
-        dueAt: timestamp + 86400000
     }
 }
 
-// Create todo item from user input and add it to array of todos
-    addTask.addEventListener("click", () => {
-        const todoText = taskInput.value.trim();
-        if (todoText !== "") {
-            todos = addTodo(todos, createTodo(todoText));
-            saveTodos(todos);
-            taskInput.value = "";
-            renderTodos(todos);
-        }
-    })
+function addTodo() {
+    const todoText = taskInput.value.trim();
+    if (todoText !== "" && todoText.length <= 500) {
+        todos = [...todos, createTodo(todoText)];
+        saveTodos(todos);
+        taskInput.value = "";
+        renderTodos(todos);
+    }
+}
+
+// Add todo on button click
+addTask.addEventListener("click", () => {
+    addTodo()
+})
+
+// Add todo when user presses "Enter"
+taskInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        addTodo();
+    }
+})
 
 // Retrieve todo items from localstorage
 function getTodos() {
-    const todosJson = localStorage.getItem("todos");
-    if (todosJson) {
-        return JSON.parse(todosJson);
-    } else {
+    try {
+        const todosJson = localStorage.getItem("todos");
+        return todosJson ? JSON.parse(todosJson) : [];
+    } catch (error) {
+        console.error("Error loading todos:", error);
         return [];
     }
 }
 
-// Add a new todo
-function addTodo(todoArray, newTodo) {
-    const newTodos = [...todoArray, newTodo];
-    return newTodos;
-}
+// Clear completed todos
+clearTasks.addEventListener("click", () => {
+    const newTodos = todos.filter(todo => todo.status !== STATUS.COMPLETED);
+    todos = newTodos;
+    saveTodos(todos);
+    renderTodos(todos);
+});
 
 
-// Save todos to localstorage
+
+// Save todos to local storage
 function saveTodos(todosArray) {
-    const todosJson = JSON.stringify(todosArray);
-    localStorage.setItem('todos', todosJson);
+    try {
+        const todosJson = JSON.stringify(todosArray);
+        localStorage.setItem('todos', todosJson);
+    } catch (error) {
+        console.error("Error saving todos:", error);
+    }
 }
 
 // Render the list
 function renderTodos(todoArray){
+    // clear the current contents of taskList so no duplication happens on render
     taskList.replaceChildren();
-    for (const todo of todoArray) {
+
+    // sort the todos
+    const pendingTodos = todoArray.filter(todo => todo.status === STATUS.PENDING);
+    const completedTodos = todoArray.filter(todo => todo.status === STATUS.COMPLETED);
+    const sortedTodos = [...pendingTodos, ...completedTodos];
+
+    // Render the todos
+    for (const todo of sortedTodos) {
         const taskItem = document.createElement("li");
         taskItem.classList.add("card", "taskItem");
         taskItem.dataset.id = todo.id;
@@ -77,18 +102,10 @@ function renderTodos(todoArray){
         }
         taskList.appendChild(taskItem);
     }
+    // Only show clear button if there are completed todos
+    clearTasks.style.display = completedTodos.length > 0 ? "inline-block" : "none";
 }
 
-// // Delete an item from the list
-// taskList.addEventListener("click", (event) => {
-//     if (event.target.classList.contains("delete")){
-//         const taskId = event.target.dataset.id;
-//         const newTodos = todos.filter(todo => todo.id !== taskId);
-//         todos = newTodos;
-//         saveTodos(todos);
-//         renderTodos(todos);
-//     }
-// })
 
 // Complete a todo item
 taskList.addEventListener("click", (event) => {
@@ -108,7 +125,6 @@ taskList.addEventListener("click", (event) => {
     saveTodos(todos);
     renderTodos(todos);
 });
-
 
 
 

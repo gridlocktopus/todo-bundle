@@ -41,18 +41,23 @@ button#add {
     cursor: pointer;
 }
 
-/* REMOVE */
-/* button.delete{
+.button-container {
+    display: flex;
+}
+
+button#clear {
     border: none;
     background-color: #1363DF;
     text-decoration: none;
-    padding: 10px;
-    font-size: 14px;
+    padding: 15px;
+    padding-bottom: 17px;
+    font-size: 17px;
     color: #fff;
     border-radius: .5em;
     cursor: pointer;
+    margin: auto;
     display: none;
-} */
+}
 
 ul{
     padding-inline-start: 0px;
