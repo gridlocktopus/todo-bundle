@@ -1,0 +1,13 @@
+# Node / JS
+node_modules/
+dist/
+.vite/
+
+# Environment
+.env
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
