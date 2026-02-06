@@ -39,11 +39,14 @@ function App() {
     if (todoText.trim() === "") {
       return;
     }
-
     const newTodo = createTodo(todoText);
     setTodos((prevTodos) => [...prevTodos, newTodo]);
 
     setTodoText("");
+  };
+
+  const handleDeleteButton = (id) => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id != id));
   };
 
   console.log(todos);
@@ -59,7 +62,12 @@ function App() {
         <button onClick={handleAddButton}>Add task</button>
         <ul>
           {todos.map((todo) => (
-            <li key={todo.id}>{todo.text}</li>
+            <li key={todo.id}>
+              <span>{todo.text}</span>
+              <button onClick={() => handleDeleteButton(todo.id)}>
+                Delete
+              </button>
+            </li>
           ))}
         </ul>
         <a href="https://vite.dev" target="_blank">
