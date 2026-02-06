@@ -26,6 +26,7 @@ function App() {
     return {
       id: crypto.randomUUID(),
       text: todoText,
+      completed: false,
       createdAt: Date.now(),
       dueAt: todoDueAt || null,
     };
@@ -49,6 +50,21 @@ function App() {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id != id));
   };
 
+  const handleToggle = (id) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            completed: !todo.completed,
+          };
+        } else {
+          return todo;
+        }
+      }),
+    );
+  };
+
   console.log(todos);
 
   return (
@@ -62,9 +78,16 @@ function App() {
         <button onClick={handleAddButton}>Add task</button>
         <ul>
           {todos.map((todo) => (
-            <li key={todo.id}>
-              <span>{todo.text}</span>
-              <button onClick={() => handleDeleteButton(todo.id)}>
+            <li key={todo.id} onClick={() => handleToggle(todo.id)}>
+              <span className={todo.completed ? "completed" : "pending"}>
+                {todo.text}
+              </span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteButton(todo.id);
+                }}
+              >
                 Delete
               </button>
             </li>
