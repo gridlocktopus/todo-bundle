@@ -1,13 +1,9 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import { useRef } from "react";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   // initialize the todos array
   const [todos, setTodos] = useState(() => {
     const stored = localStorage.getItem("savedTodos");
@@ -22,6 +18,7 @@ function App() {
     localStorage.setItem("savedTodos", JSON.stringify(todos));
   }, [todos]);
 
+  // create a new todo
   function createTodo(todoText, todoDueAt) {
     return {
       id: crypto.randomUUID(),
@@ -32,10 +29,12 @@ function App() {
     };
   }
 
+  // handler for user text input
   const handleTextInputChange = (e) => {
     setTodoText(e.target.value);
   };
 
+  // handler for the "Add" button
   const handleAddButton = () => {
     if (todoText.trim() === "") {
       return;
@@ -46,10 +45,12 @@ function App() {
     setTodoText("");
   };
 
+  // handler for the "Delete" button
   const handleDeleteButton = (id) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id != id));
   };
 
+  // handler for toggling todo status
   const handleToggle = (id) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) => {
@@ -64,8 +65,6 @@ function App() {
       }),
     );
   };
-
-  console.log(todos);
 
   return (
     <>
