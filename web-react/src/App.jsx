@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import "./App.css";
-import { useRef } from "react";
 
 function App() {
   // initialize the todos array
@@ -47,7 +46,7 @@ function App() {
 
   // handler for the "Delete" button
   const handleDeleteButton = (id) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id != id));
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
   // handler for toggling todo status
@@ -66,6 +65,10 @@ function App() {
     );
   };
 
+  const pendingTodos = todos.filter((todo) => !todo.completed);
+  const completedTodos = todos.filter((todo) => todo.completed);
+  const visibleTodos = [...pendingTodos, ...completedTodos];
+
   return (
     <>
       <div>
@@ -76,7 +79,7 @@ function App() {
         ></input>
         <button onClick={handleAddButton}>Add task</button>
         <ul>
-          {todos.map((todo) => (
+          {visibleTodos.map((todo) => (
             <li key={todo.id} onClick={() => handleToggle(todo.id)}>
               <span className={todo.completed ? "completed" : "pending"}>
                 {todo.text}
