@@ -12,6 +12,8 @@ function App() {
   // initialize the user input text
   const [todoText, setTodoText] = useState("");
 
+  const [todoDueAt, setTodoDueAt] = useState("");
+
   // Save todos to local storage
   useEffect(() => {
     localStorage.setItem("savedTodos", JSON.stringify(todos));
@@ -33,15 +35,20 @@ function App() {
     setTodoText(e.target.value);
   };
 
+  const handleDateInputChange = (e) => {
+    setTodoDueAt(e.target.value);
+  };
+
   // handler for the "Add" button
   const handleAddButton = () => {
     if (todoText.trim() === "") {
       return;
     }
-    const newTodo = createTodo(todoText);
+    const newTodo = createTodo(todoText, todoDueAt);
     setTodos((prevTodos) => [...prevTodos, newTodo]);
 
     setTodoText("");
+    setTodoDueAt("");
   };
 
   // handler for the "Delete" button
@@ -76,6 +83,11 @@ function App() {
           type="text"
           value={todoText}
           onChange={handleTextInputChange}
+        ></input>
+        <input
+          type="datetime-local"
+          value={todoDueAt}
+          onChange={handleDateInputChange}
         ></input>
         <button onClick={handleAddButton}>Add task</button>
         <ul>
