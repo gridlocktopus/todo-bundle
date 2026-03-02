@@ -76,6 +76,21 @@ function App() {
   const completedTodos = todos.filter((todo) => todo.completed);
   const visibleTodos = [...pendingTodos, ...completedTodos];
 
+  function formatDate(date) {
+    if (!date) {
+      return "";
+    } else {
+      const d = new Date(date);
+      if (Number.isNaN(d.getTime())) {
+        return "";
+      }
+      return d.toLocaleString(undefined, {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    }
+  }
+
   return (
     <>
       <div>
@@ -96,6 +111,7 @@ function App() {
               <span className={todo.completed ? "completed" : "pending"}>
                 {todo.text}
               </span>
+              {todo.dueAt && <span>{formatDate(todo.dueAt)}</span>}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
