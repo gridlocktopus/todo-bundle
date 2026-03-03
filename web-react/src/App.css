@@ -1,10 +1,157 @@
+body {
+  display: block;
+}
+
 #root {
-  max-width: 1280px;
+  font-family: "Inter", sans-serif;
+  max-width: 400px;
   margin: 0 auto;
-  padding: 2rem;
+}
+
+h1 {
+  font-size: 64px;
+  font-weight: 800;
   text-align: center;
+}
+
+/* ========= Input bar  ========= */
+
+.input-container {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 50px;
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 0.5em;
+  overflow: hidden;
+}
+
+/* When ANY child (text/date/button) is focused, style the wrapper */
+.input-container:focus-within {
+  border-color: rgba(59, 130, 246, 0.9);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+/* Shared base styles for inputs inside the bar */
+.input-container input[type="text"],
+.input-container input[type="datetime-local"] {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 12px 14px;
+  min-width: 0;
+}
+
+.input-container input[type="text"] {
+  flex: 1 1 auto;
+}
+
+.input-container input[type="datetime-local"] {
+  flex: 0 0 190px;
+}
+
+/* Remove the default focus on inputs */
+.input-container input[type="text"]:focus,
+.input-container input[type="datetime-local"]:focus {
+  outline: none;
+}
+
+button.addTodo {
+  flex: 0 0 auto;
+  border: 0;
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  font: inherit;
+  padding: 12px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+button.addTodo:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+button.addTodo:active {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+button.addTodo:focus {
+  outline: none;
+}
+
+/* ========= TODO List  ========= */
+
+.tasklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+/* Card */
+.tasklist li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.tasklist li:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tasklist li > span:first-child {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 span.completed {
   text-decoration: line-through;
+  opacity: 0.7;
+}
+
+span.pending {
+  text-decoration: none;
+}
+
+.tasklist li > span.todo-due {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+
+  font-size: 12px;
+  opacity: 0.75;
+  line-height: 1.15;
+  text-align: right;
+  white-space: pre-line;
+}
+
+.tasklist li button {
+  border: 0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.35);
+  color: inherit;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+.tasklist li:hover button,
+.tasklist li:focus-within button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.tasklist li button:hover {
+  background: rgba(0, 0, 0, 0.5);
 }

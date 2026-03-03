@@ -94,24 +94,31 @@ function App() {
   return (
     <>
       <div>
-        <input
-          type="text"
-          value={todoText}
-          onChange={handleTextInputChange}
-        ></input>
-        <input
-          type="datetime-local"
-          value={todoDueAt}
-          onChange={handleDateInputChange}
-        ></input>
-        <button onClick={handleAddButton}>Add task</button>
-        <ul>
+        <h1>What do you need to do?</h1>
+        <div className="input-container">
+          <input
+            type="text"
+            value={todoText}
+            onChange={handleTextInputChange}
+          ></input>
+          <input
+            type="datetime-local"
+            value={todoDueAt}
+            onChange={handleDateInputChange}
+          ></input>
+          <button className="addTodo" onClick={handleAddButton}>
+            Add task
+          </button>
+        </div>
+        <ul className="tasklist">
           {visibleTodos.map((todo) => (
             <li key={todo.id} onClick={() => handleToggle(todo.id)}>
               <span className={todo.completed ? "completed" : "pending"}>
                 {todo.text}
               </span>
-              {todo.dueAt && <span>{formatDate(todo.dueAt)}</span>}
+              {todo.dueAt && (
+                <span className="todo-due">{formatDate(todo.dueAt)}</span>
+              )}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
