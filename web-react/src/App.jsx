@@ -98,6 +98,7 @@ function App() {
         <div className="input-container">
           <input
             type="text"
+            placeholder="Add your task here..."
             value={todoText}
             onChange={handleTextInputChange}
           ></input>
@@ -107,7 +108,7 @@ function App() {
             onChange={handleDateInputChange}
           ></input>
           <button className="addTodo" onClick={handleAddButton}>
-            Add task
+            Add
           </button>
         </div>
         <ul className="tasklist">
